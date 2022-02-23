@@ -1,0 +1,3 @@
+FROM scratch
+COPY full-cycle-rocks /
+CMD ["/full-cycle-rocks"]
