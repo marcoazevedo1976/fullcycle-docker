@@ -1,0 +1,35 @@
+version: '3'
+
+networks:
+  rede-desafio2:
+    driver: bridge
+
+services:
+
+  db:
+    image: mysql 
+    command: --innodb-use-native-aio=0
+    container_name: db
+    restart: always
+    tty: true
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=nodedb
+    volumes:
+      - ./mysql:/var/lib/mysql
+    networks:
+      - rede-desafio2
+
+  app:
+    image: node
+    container_name: app
+    networks:
+      - rede-desafio2
+
+  proxy:
+    image: nginx
+    container_name: proxy-reverso
+    networks:
+      - rede-desafio2
+    ports:
+      - 8080:80
